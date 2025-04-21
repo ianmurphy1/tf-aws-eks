@@ -1,0 +1,4 @@
+serviceAccount:
+  name: external-secrets-sa
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::711205379845:role/sandbox-external-secrets

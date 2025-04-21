@@ -1,0 +1,7 @@
+configs:
+  secret:
+    # Pre set admin password
+    # no need to create the secret
+    createSecret: false
+dex:
+  enabled: false
