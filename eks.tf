@@ -38,7 +38,7 @@ module "eks" {
 
   node_security_group_additional_rules = {
     ingress_lb_access = {
-      description = "Allow access from created home and github"
+      description = "Allow access from created home and github sg"
       protocol = "tcp"
       from_port = 0
       to_port = 65535
@@ -78,7 +78,6 @@ module "eks_blueprints_addons" {
   # shit at managing k8s resources
   create_kubernetes_resources = false
 
-  # Add-ons
   enable_karpenter = true
 
   enable_aws_load_balancer_controller = true
@@ -107,7 +106,6 @@ module "eks_blueprints_addons" {
     role_name_use_prefix = false
     role_name = "${var.cluster_name}-external-secrets"
   }
-
 
   enable_argocd = true
 }

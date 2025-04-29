@@ -38,3 +38,39 @@ helm install \
 kubectl apply \
   -f "${SRC}/argocd/repos/argocd.yaml" \
   -n argocd
+
+# Sleep to give argo time to settle
+sleep 10
+
+argocd login \
+  --insecure \
+  --skip-test-tls \
+  --grpc-web \
+  --port-forward \
+  --port-forward-namespace argocd \
+  --username admin
+
+argocd app create apps \
+  --dest-namespace argocd \
+  --dest-server https://kubernetes.default.svc \
+  --repo https://github.com/ianmurphy1/argocd-eks \
+  --path argocd-apps \
+  --port-forward \
+  --port-forward-namespace argocd
+
+ARGO_APPS=(
+  apps
+  external-dns
+  aws-loadbalancer
+  argocd
+)
+
+for app in "${ARGO_APPS[@]}"; do
+  argocd app \
+    sync "${app}" \
+    --port-forward-namespace argocd \
+    --port-forward \
+    --async
+
+  sleep 20
+done

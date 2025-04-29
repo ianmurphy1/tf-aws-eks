@@ -1,7 +1,7 @@
 configs:
   secret:
-    # Pre set admin password
-    # no need to create the secret
+    # Using secretsmanager to define admin password so
+    # no need to create the secret here
     createSecret: false
 dex:
   enabled: false
